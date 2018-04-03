@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 
 
@@ -10,15 +11,60 @@ public class Health : BaseComponent
         type = ComponentType.Health;
     }
 
-    private float hp;
-    private float maxHp;
-    private Attribute attr;
-    private float physicDef;
-    private float magicDef;
+    private Action<HealthData> highEvent;
+    private Action<HealthData> lowEvent;
+
+    private HealthData data;
+    private CreatureUnit master;
+
+    public override void InjectVO(UnitVO input)
+    {
+        data = new HealthData();
+        type = ComponentType.Health;
+        switch (input.type)
+        {
+            case UnitType.creature:
+                CreatureVO vo = input as CreatureVO;
+                data.hp = vo.hp;
+                data.maxHp = vo.maxHp;
+                data.attr = vo.attr;
+                data.physicDef = vo.physicDef;
+                data.magicDef = vo.magicDef;
+                break;
+
+        }
+        
+    }
+
+    public void CheckEvent()
+    {
+        if (highEvent != null)
+        {
+            highEvent(data);
+            highEvent = null;
+        }
+        if (lowEvent != null)
+        {
+            lowEvent(data);
+            lowEvent = null;
+        }
+    }
+
+    public override void OnUpdate(float delta)
+    {
+        base.OnUpdate(delta);
+        CheckEvent();
+        if(master!=null && data.hp < 0f)
+        {
+            master.Remove();
+        }
+        
+    }
 
     public override void CleanUp()
     {
         base.CleanUp();
+        data = null;
 
     }
 
@@ -46,27 +92,29 @@ public class Health : BaseComponent
         if (dam.value > 0 && dam.caster != -1)
         {
             value = dam.value;
-            float rat = Health.TypeTransfer(dam.attr, attr);
+            float rat = Health.TypeTransfer(dam.attr, data.attr);
             value *= rat;
             switch (dam.type)
             {
                 case DamageType.Holy:
                     break;
                 case DamageType.Magic:
-                    value = Health.MDamTransfer(magicDef, value);
+                    value = Health.MDamTransfer(data.magicDef, value);
                     break;
                 case DamageType.Physic:
-                    value = Health.PDamTransfer(physicDef, value);
+                    value = Health.PDamTransfer(data.physicDef, value);
                     break;
             }
             
         }
-        hp -= value;
+        data.hp -= value;
     }
 
-    public override void OnEnter()
+    public override void OnEnter(GameObject obj)
     {
-        base.OnEnter();
+        base.OnEnter(obj);
+        master = obj.GetComponent<CreatureUnit>();
+        
     }
 
 }

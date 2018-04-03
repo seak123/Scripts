@@ -66,6 +66,9 @@ public class BattleUnitFactory
         {
             case UnitType.creature:
                 res = new CreatureUnit();
+                res.Init();
+                res.Id = unitId;
+                unitId++;
                 break;
         }
         return res;

@@ -8,6 +8,7 @@ public enum ComponentType
     Health,
     Movement,
     Buffcontainer,
+    Avatar,
 }
 
 [Insert]

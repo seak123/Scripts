@@ -14,7 +14,7 @@ public class GameRoot:MonoBehaviour {
     private void Awake()
     {
         Init();
-        timeManager.onUpdate += battleField.update;
+        timeManager.onUpdate += battleField.Update;
     }
 
     private void Init()

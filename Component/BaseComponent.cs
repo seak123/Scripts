@@ -15,20 +15,27 @@ public class BaseComponent : IComponent
         set { type = value; }
     }
 
-    public virtual void OnEnter()
+    public virtual void OnEnter(GameObject obj)
     {
 
     }
 
     public virtual void CleanUp()
     {
-
+        onEnter = null;
+        onUpdate = null;
+        onLeave = null;
     }
-    public virtual void OnUpdate()
+    public virtual void OnUpdate(float delta)
     {
 
     }
     public virtual void OnLeave()
+    {
+
+    }
+
+    public virtual void InjectVO(UnitVO vo)
     {
 
     }

@@ -4,6 +4,7 @@ using System;
 
 public enum DamageType
 {
+    None,
     Holy,
     Physic,
     Magic,
@@ -11,6 +12,7 @@ public enum DamageType
 
 public enum Attribute
 {
+    None,
     Fire,
     Ice,
 }

@@ -3,8 +3,9 @@ using System.Collections;
 
 interface IComponent
 {
-    void OnEnter();
-    void OnUpdate();
+    void OnEnter(GameObject obj);
+    void OnUpdate(float delta);
     void OnLeave();
     void CleanUp();
+    void InjectVO(UnitVO vo);
 }

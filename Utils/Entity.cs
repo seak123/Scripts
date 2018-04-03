@@ -10,6 +10,11 @@ public class Entity
 
     private List<BaseComponent> components;
 
+    public List<BaseComponent> GetAllComponents()
+    {
+        return components;
+    }
+
     public void AddComponent(ComponentType type)
     {
         if (FindComponent(type))
