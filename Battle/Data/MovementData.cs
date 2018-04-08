@@ -9,5 +9,6 @@ public class MovementData
     public float speed;
     public MoveType movetype;
     public Vector2 bodySize;
+    public UnitType type;
 
 }

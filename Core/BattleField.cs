@@ -4,8 +4,7 @@ using UnityEngine;
 using PowerInject;
 
 [Insert]
-public class BattleField : IManager
-{
+public class BattleField { 
 
     [Inject]
     public BattleUnitFactory unitFactory;

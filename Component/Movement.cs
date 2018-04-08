@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using PowerInject;
 
 public enum MoveType
 {
@@ -15,9 +16,10 @@ public class Movement :BaseComponent
         type = ComponentType.Movement;
     }
 
+    [Inject]
+    public MapField mapField;
 
     private MovementData data;
-    private Collider collider;
 
 
     public override void InjectVO(UnitVO input)
@@ -43,12 +45,13 @@ public class Movement :BaseComponent
         switch (obj.GetComponent<UnitCard>().type)
         {
             case UnitType.creature:
-                collider = obj.GetComponent<CapsuleCollider>();
-                if (collider == null) collider = obj.AddComponent<CapsuleCollider>();
-                CapsuleCollider co = collider as CapsuleCollider;
-                co.center = new Vector3(0f, 0f, 0f);
-                co.radius = data.bodySize.x;
-                co.height = data.bodySize.y;
+                CircleMapUnit c = mapField.Get(MapType.Circle) as CircleMapUnit;
+                c.type = MapType.Circle;
+                c.positon = new Vector2(data.position.x, data.position.z);
+                c.id = obj.GetComponent<UnitCard>().unit.Id;
+                c.speed = new Vector2(data.forward.x * data.speed, data.forward.z * data.speed);
+                c.radius = data.bodySize.x;
+                mapField.AddUnit(c);
                 break;
         }
         
