@@ -17,9 +17,14 @@ public class Health : BaseComponent
     private HealthData data;
     private CreatureUnit master;
 
+    public override void Init()
+    {
+        base.Init();
+        data = new HealthData();
+    }
+
     public override void InjectVO(UnitVO input)
     {
-        data = new HealthData();
         type = ComponentType.Health;
         switch (input.type)
         {
@@ -64,7 +69,7 @@ public class Health : BaseComponent
     public override void CleanUp()
     {
         base.CleanUp();
-        data = null;
+        
 
     }
 
@@ -113,7 +118,7 @@ public class Health : BaseComponent
     public override void OnEnter(GameObject obj)
     {
         base.OnEnter(obj);
-        master = obj.GetComponent<CreatureUnit>();
+        master = obj.GetComponent<UnitCard>().unit as CreatureUnit;
         
     }
 

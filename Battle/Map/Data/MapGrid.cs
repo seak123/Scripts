@@ -21,6 +21,24 @@ public class MapGrid
     {
         gridSize = size;
     }
+    private static int maxRow;
+    public static int MaxRow()
+    {
+        return maxRow;
+    }
+    public static void SetMaxRow(int i)
+    {
+        maxRow = i;
+    }
+    private static int maxCol;
+    public static int MaxCol()
+    {
+        return maxCol;
+    }
+    public static void SetMaxCol(int i)
+    {
+        maxCol = i;
+    }
     public int row;
     public int col;
     public bool isMoved;

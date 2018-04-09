@@ -25,6 +25,7 @@ public class CreatureVO : UnitVO
     public float speed;
     public MoveType movetype;
     public Vector2 bodysize;
+    //public UnitType unitType;
 
     // avatar component data
     public AnimationData[] anims;

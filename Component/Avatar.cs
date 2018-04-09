@@ -68,6 +68,11 @@ public class Avatar : BaseComponent
         }
     }
 
+    public override void Init()
+    {
+        base.Init();
+    }
+
     public override void OnEnter(GameObject obj)
     {
         base.OnEnter(obj);

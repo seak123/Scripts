@@ -7,13 +7,15 @@ public class CreatureUnit : BaseUnit
     [Inject]
     public PrefabManager prefabMng;
 
-    private GameObject gameobject;
+    public GameObject gameobject;
+
 
 
     public override void Init()
     {
         base.Init();
         type = UnitType.creature;
+        entity = new Entity();
         entity.AddComponent(ComponentType.Health);
         entity.AddComponent(ComponentType.Movement);
         entity.AddComponent(ComponentType.Avatar);

@@ -27,6 +27,8 @@ public class BattleUnitFactory
             {
                 res = pool[0];
                 pool.RemoveAt(0);
+                res.Id = unitId;
+                unitId++;
                 return res;
             }
             else

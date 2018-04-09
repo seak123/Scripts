@@ -71,6 +71,15 @@ public class ComponentFactory
         {
             case ComponentType.Health:
                 res = new Health();
+                res.Init();
+                break;
+            case ComponentType.Avatar:
+                res = new Avatar();
+                res.Init();
+                break;
+            case ComponentType.Movement:
+                res = new Movement();
+                res.Init();
                 break;
         }
         return res;

@@ -7,5 +7,5 @@ public class UnitCard : MonoBehaviour
 
     public UnitType type;
     public BaseUnit unit;
-    
+
 }

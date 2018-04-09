@@ -20,6 +20,11 @@ public class BaseComponent : IComponent
 
     }
 
+    public virtual void Init()
+    {
+
+    }
+
     public virtual void CleanUp()
     {
         onEnter = null;

@@ -10,12 +10,19 @@ public enum UnitType
     effect,
 }
 
+public enum Group
+{
+    player,
+    enemy,
+}
+
 
 public class BaseUnit
 {
     public Action enterEvent;
     public Action exitEvent;
 
+    protected Group group;
     protected int id;
     protected UnitType type;
     protected Entity entity;
@@ -26,6 +33,11 @@ public class BaseUnit
     public UnitType Type
     {
         get { return type; }
+    }
+
+    public Group Group
+    {
+        get { return group; }
     }
 
     public int Id
@@ -47,6 +59,7 @@ public class BaseUnit
     public virtual  void InjectVO(UnitVO vo)
     {
         List<BaseComponent> coms = entity.GetAllComponents();
+        group = vo.group;
         foreach(var com in coms)
         {
             com.InjectVO(vo);
