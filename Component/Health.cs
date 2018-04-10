@@ -11,16 +11,18 @@ public class Health : BaseComponent
         type = ComponentType.Health;
     }
 
-    private Action<HealthData> highEvent;
-    private Action<HealthData> lowEvent;
+    private Action<HealthData,HealthData> highEvent;
+    private Action<HealthData,HealthData> lowEvent;
 
-    private HealthData data;
+    private HealthData basedata;
+    private HealthData realdata;
     private CreatureUnit master;
 
     public override void Init()
     {
         base.Init();
-        data = new HealthData();
+        basedata = new HealthData();
+        realdata = new HealthData();
     }
 
     public override void InjectVO(UnitVO input)
@@ -30,11 +32,16 @@ public class Health : BaseComponent
         {
             case UnitType.creature:
                 CreatureVO vo = input as CreatureVO;
-                data.hp = vo.hp;
-                data.maxHp = vo.maxHp;
-                data.attr = vo.attr;
-                data.physicDef = vo.physicDef;
-                data.magicDef = vo.magicDef;
+                basedata.hp = vo.hp;
+                basedata.maxHp = vo.maxHp;
+                basedata.attr = vo.attr;
+                basedata.physicDef = vo.physicDef;
+                basedata.magicDef = vo.magicDef;
+                realdata.hp = vo.hp;
+                realdata.maxHp = vo.maxHp;
+                realdata.attr = vo.attr;
+                realdata.physicDef = vo.physicDef;
+                realdata.magicDef = vo.magicDef;
                 break;
 
         }
@@ -45,12 +52,12 @@ public class Health : BaseComponent
     {
         if (highEvent != null)
         {
-            highEvent(data);
+            highEvent(realdata,basedata);
             highEvent = null;
         }
         if (lowEvent != null)
         {
-            lowEvent(data);
+            lowEvent(realdata,basedata);
             lowEvent = null;
         }
     }
@@ -59,7 +66,7 @@ public class Health : BaseComponent
     {
         base.OnUpdate(delta);
         CheckEvent();
-        if(master!=null && data.hp < 0f)
+        if(master!=null && realdata.hp < 0f)
         {
             master.Remove();
         }
@@ -97,22 +104,22 @@ public class Health : BaseComponent
         if (dam.value > 0 && dam.caster != -1)
         {
             value = dam.value;
-            float rat = Health.TypeTransfer(dam.attr, data.attr);
+            float rat = Health.TypeTransfer(dam.attr, realdata.attr);
             value *= rat;
             switch (dam.type)
             {
                 case DamageType.Holy:
                     break;
                 case DamageType.Magic:
-                    value = Health.MDamTransfer(data.magicDef, value);
+                    value = Health.MDamTransfer(realdata.magicDef, value);
                     break;
                 case DamageType.Physic:
-                    value = Health.PDamTransfer(data.physicDef, value);
+                    value = Health.PDamTransfer(realdata.physicDef, value);
                     break;
             }
             
         }
-        data.hp -= value;
+        realdata.hp -= value;
     }
 
     public override void OnEnter(GameObject obj)

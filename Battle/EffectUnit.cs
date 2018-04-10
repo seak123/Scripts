@@ -10,10 +10,20 @@ public class EffectUnit : BaseUnit
 
     public GameObject gameobject;
 
-    private List<CreatureUnit> containUnits;
+    private List<int> containUnits;
 
-    public void AddUnit(CreatureUnit u)
+    public void AddUnit(int id)
     {
-        containUnits.Add(u);
+        containUnits.Add(id);
+    }
+
+    public bool IsContainKey(int i)
+    {
+        return containUnits.Contains(i);
+    }
+
+    public void OnUnitEnter(CreatureUnit unit)
+    {
+
     }
 }

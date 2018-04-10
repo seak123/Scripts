@@ -189,7 +189,11 @@ public class MapField
             {
                 if (c.Value.unit.Group != sg && IsCollided(e.Value, c.Value))
                 {
-                    if(e.Value.unit)
+                    EffectUnit effectunit = e.Value.unit as EffectUnit;
+                    if (!effectunit.IsContainKey(c.Value.id))
+                    {
+                        effectunit.AddUnit(c.Value.id);
+                    }
                 }
             }
         }

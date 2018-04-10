@@ -35,6 +35,11 @@ public class BaseUnit
         get { return type; }
     }
 
+    public Entity Entity
+    {
+        get { return entity; }
+    }
+
     public Group Group
     {
         get { return group; }
